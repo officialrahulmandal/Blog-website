@@ -3,9 +3,18 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render,get_object_or_404
 from .models import blog
+from django.views.generic import ListView
 from django.core.paginator import Paginator, EmptyPage,PageNotAnInteger
 
 # Create your views here.
+class PostListView(ListView):
+	queryset =blog.published.all()
+	context_object_name='posts'
+	paginate_by=3
+	template_name='blog/post/list.html'
+
+
+
 def post_list(request):
 	object_list = blog.published.all()
 	paginator=Paginator(object_list,3)
